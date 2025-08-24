@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ovala - A fast and modern web proxy.">
+    <meta property="og:image" content="/images/banner.png" />
+    <meta property="og:title" content="Ovala - Proxy" />
+    <meta property="og:description" content="Ovala - A fast and modern web proxy.">
+    <meta property="og:url" content="https://ovala.vercel.app/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ovala - Proxy">
+    <meta name="twitter:description" content="Ovala - A fast and modern web proxy.">
+    <meta name="twitter:image" content="/images/banner.png">
+    <title>Ovala - 404 Not Found</title>
+    <link rel="icon" href="/images/favicon.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styling/other.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+    <div class="theme-switcher" id="theme-switcher" title="Toggle Theme">
+        <div class="sun-icon"><i class="fa-solid fa-sun"></i></div>
+        <div class="moon-icon" style="display:none;"><i class="fa-solid fa-moon"></i></div>
+    </div>
+
+    <main>
+        <div class="content-wrapper">
+            <a href="/" class="back-link animate-in">
+                <i class="fa-solid fa-arrow-left"></i>
+                Go back home
+            </a>
+
+            <div class="hero-banner animate-in">
+                <h1>404 - Page Not Found</h1>
+                <p>The page you are looking for might have been removed, had its name changed, or is temporarily
+                    unavailable.</p>
+            </div>
+
+            <div class="content-section animate-in">
+                <p style="text-align: center;">If you entered the web address, please check it is correct. Otherwise,
+                    you can return to the homepage.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <nav>
+            Ovala by EndOverdosing &bull;
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms-of-service">Terms</a>
+        </nav>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getEl = (selector) => document.querySelector(selector);
+            const themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
+
+            const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } };
+            const getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+
+            function applyTheme(theme) {
+                document.body.classList.toggle('light-theme', theme === 'light');
+                sunIcon.style.display = theme === 'light' ? 'flex' : 'none';
+                moonIcon.style.display = theme === 'light' ? 'none' : 'flex';
+            }
+
+            let currentTheme = getPreference('theme') || 'dark';
+            applyTheme(currentTheme);
+
+            themeSwitcher.addEventListener('click', () => {
+                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                savePreference('theme', currentTheme);
+                applyTheme(currentTheme);
+            });
+
+            document.addEventListener('mousemove', e => {
+                document.body.style.setProperty('--cursor-x', `${e.clientX}px`);
+                document.body.style.setProperty('--cursor-y', `${e.clientY}px`);
+                document.body.style.setProperty('--cursor-opacity', '1');
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -2,6 +2,7 @@ var express = require('express');
 var Unblocker = require('unblocker');
 var Transform = require('stream').Transform;
 var youtube = require('unblocker/examples/youtube/youtube.js');
+var path = require('path');
 
 var app = express();
 
@@ -49,22 +50,10 @@ function fixMalformedUrlMiddleware(data) {
     }
 }
 
-function blockAdsMiddleware(data) {
-    const adHosts = [
-        'googlesyndication.com', 'googleadservices.com', 'doubleclick.net',
-        'adservice.google.com', 'pagead2.googlesyndication.com', 'securepubads.g.doubleclick.net',
-    ];
-    if (adHosts.some(host => data.url.includes(host))) {
-        console.log(`Blocking ad request to: ${data.url}`);
-        data.setHeader('Content-Type', 'application/javascript');
-        data.end('// Ad blocked by proxy');
-    }
-}
 
 var unblockerConfig = {
     prefix: '/proxy/',
     requestMiddleware: [
-        blockAdsMiddleware,
         fixMalformedUrlMiddleware,
         youtube.processRequest
     ],
@@ -91,6 +80,18 @@ app.get("/no-js", function (req, res) {
     } else {
         res.redirect('/');
     }
+});
+
+
+app.use(function (err, req, res, next) {
+    console.error("Proxy Error:", err);
+    const errorMessage = "The requested URL could not be found or is currently unavailable.";
+    res.redirect(`/?error=${encodeURIComponent(errorMessage)}`);
+});
+
+
+app.use(function (req, res, next) {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 module.exports = app;

@@ -8,7 +8,7 @@
   <meta property="og:image" content="/images/banner.png" />
   <meta property="og:title" content="Ovala - Proxy" />
   <meta property="og:description" content="Ovala - A fast and modern web proxy.">
-  <meta property="og:url" content="https://roxy.vercel.app/">
+  <meta property="og:url" content="https://ovala.vercel.app/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ovala - Proxy">
   <meta name="twitter:description" content="Ovala - A fast and modern web proxy.">
@@ -18,6 +18,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styling/index.css">
+  <link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
@@ -67,12 +68,12 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const getEl = (selector) => document.querySelector(selector);
-      const themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
-      const unblockerForm = getEl('#unblocker-form'), urlInput = getEl('#url'), submitButton = getEl('#submit-button');
-      const clearButton = getEl('.clear-button'), historyContainer = getEl('#history-container');
+    const getEl = (selector) => document.querySelector(selector);
+    const themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
+    const unblockerForm = getEl('#unblocker-form'), urlInput = getEl('#url'), submitButton = getEl('#submit-button');
+    const clearButton = getEl('.clear-button'), historyContainer = getEl('#history-container'), errorContainer = getEl('#error-container');
 
+    function initializeApp() {
       const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } };
       const getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
 
@@ -81,18 +82,15 @@
         sunIcon.style.display = theme === 'light' ? 'flex' : 'none';
         moonIcon.style.display = theme === 'light' ? 'none' : 'flex';
       }
-
       let currentTheme = getPreference('theme') || 'dark';
       applyTheme(currentTheme);
-
-      themeSwitcher.addEventListener('click', () => {
+      themeSwitcher.onclick = () => {
         currentTheme = currentTheme === 'light' ? 'dark' : 'light';
         savePreference('theme', currentTheme);
         applyTheme(currentTheme);
-      });
+      };
 
       document.addEventListener('mousemove', e => { document.body.style.setProperty('--cursor-x', `${e.clientX}px`); document.body.style.setProperty('--cursor-y', `${e.clientY}px`); document.body.style.setProperty('--cursor-opacity', '1'); });
-
       document.querySelectorAll('.interactive-border').forEach(element => {
         element.addEventListener('mousemove', e => {
           const rect = element.getBoundingClientRect();
@@ -113,14 +111,35 @@
         history.unshift(url);
         savePreference('roxy_history', JSON.stringify(history.slice(0, 4)));
       }
+      function clearHistory() {
+        if (getHistory().length === 0) return;
+        historyContainer.classList.add('clearing');
+        setTimeout(() => {
+          savePreference('roxy_history', '[]');
+          renderHistory();
+          historyContainer.classList.remove('clearing');
+        }, 350);
+      }
       function renderHistory() {
-        historyContainer.innerHTML = getHistory().map(url => {
-          const domain = new URL(url).hostname.replace('www.', '');
-          return `<div class="history-item" data-url="${url}" title="${url}"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 0.5rem;"></i>${domain}</div>`;
-        }).join('');
-        historyContainer.querySelectorAll('.history-item').forEach(item => {
-          item.onclick = () => { urlInput.value = item.dataset.url; unblockerForm.requestSubmit(); };
-        });
+        const history = getHistory();
+        if (history.length > 0) {
+          const itemsHTML = history.map(url => {
+            try {
+              const domain = new URL(url).hostname.replace('www.', '');
+              return `<div class="history-item" data-url="${url}" title="${url}"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 0.5rem;"></i>${domain}</div>`;
+            } catch (e) { return ''; }
+          }).join('');
+          const clearButtonHTML = `<div id="clear-history-button" class="history-item clear-history" title="Clear history"><i class="fa-solid fa-trash-can" style="margin-right: 0.5rem;"></i>Clear All</div>`;
+
+          historyContainer.innerHTML = `<div class="history-items-list">${itemsHTML}</div>${clearButtonHTML}`;
+
+          historyContainer.querySelectorAll('.history-item:not(.clear-history)').forEach(item => {
+            item.onclick = () => { urlInput.value = item.dataset.url; unblockerForm.requestSubmit(); };
+          });
+          getEl('#clear-history-button').onclick = clearHistory;
+        } else {
+          historyContainer.innerHTML = '';
+        }
       }
 
       unblockerForm.addEventListener('submit', e => {
@@ -138,7 +157,6 @@
             "https://www.google.com/search?q=" + encodeURIComponent(urlValue);
 
         addToHistory(finalUrl);
-
         window.location.href = `/no-js?url=${encodeURIComponent(finalUrl)}`;
       });
 
@@ -147,10 +165,29 @@
         if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); urlInput.focus(); }
       });
 
-      try { const err = new URLSearchParams(window.location.search).get('error'); if (err) getEl('#error-container').innerHTML = `<div style="background-color: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.2); color: #ff9494; padding: 1.25rem; border-radius: 20px; text-align: center; font-weight: 500;">${decodeURIComponent(err.replace(/\+/g, ' '))}</div>`; } catch (e) { }
+      try {
+        const err = new URLSearchParams(window.location.search).get('error');
+        if (err) {
+          errorContainer.innerHTML = `<div style="background-color: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.2); color: #ff9494; padding: 1.25rem; border-radius: 20px; text-align: center; font-weight: 500;">${decodeURIComponent(err.replace(/\+/g, ' '))}</div>`;
+        }
+      } catch (e) { }
 
-      urlInput.focus(); renderHistory();
+      urlInput.disabled = false;
+      submitButton.disabled = false;
+      submitButton.classList.remove('loading');
+      urlInput.focus();
+      renderHistory();
+      clearButton.classList.toggle('visible', urlInput.value.length > 0);
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        initializeApp();
+      }
     });
+
   </script>
 </body>
 
