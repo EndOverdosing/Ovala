@@ -22,7 +22,7 @@ function addGa(html) {
             "  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);",
             "})();",
             "</script>"
-        ].join("\n");
+            ].join("\n");
         html = html.replace("</body>", ga + "\n\n</body>");
     }
     return html;
@@ -32,7 +32,7 @@ function googleAnalyticsMiddleware(data) {
     if (data.contentType == 'text/html') {
         data.stream = data.stream.pipe(new Transform({
             decodeStrings: false,
-            transform: function (chunk, encoding, next) {
+            transform: function(chunk, encoding, next) {
                 this.push(addGa(chunk.toString()));
                 next();
             }
@@ -41,8 +41,9 @@ function googleAnalyticsMiddleware(data) {
 }
 
 var unblockerConfig = {
-    prefix: '/povola/',
+    prefix: '/proxy/',
     requestMiddleware: [
+        youtube.processRequest
     ],
     responseMiddleware: [
         googleAnalyticsMiddleware
@@ -55,13 +56,13 @@ app.use(unblocker);
 
 app.use('/', express.static(__dirname + '/public'));
 
-app.get("/no-js", function (req, res) {
+app.get("/no-js", function(req, res) {
     var site = querystring.parse(url.parse(req.url).query).url;
     res.redirect(unblockerConfig.prefix + site);
 });
 
 const port = process.env.PORT || process.env.VCAP_APP_PORT || 8080;
 
-app.listen(port, function () {
+app.listen(port, function() {
     console.log(`node unblocker process listening at http://localhost:${port}/`);
 }).on("upgrade", unblocker.onUpgrade);
