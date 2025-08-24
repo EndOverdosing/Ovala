@@ -4,3 +4,4 @@ thumbs.db
 .env
 *.log
 .vscode/
+.vercel

@@ -1,11 +1,11 @@
-var url = require('url');
-var querystring = require('querystring');
 var express = require('express');
 var Unblocker = require('unblocker');
 var Transform = require('stream').Transform;
-var youtube = require('unblocker/examples/youtube/youtube.js')
+var youtube = require('unblocker/examples/youtube/youtube.js');
 
 var app = express();
+
+app.set('trust proxy', 1);
 
 var google_analytics_id = process.env.GA_ID || null;
 
@@ -13,7 +13,7 @@ function addGa(html) {
     if (google_analytics_id) {
         var ga = [
             "<script type=\"text/javascript\">",
-            "var _gaq = []; // overwrite the existing one, if any",
+            "var _gaq = [];",
             "_gaq.push(['_setAccount', '" + google_analytics_id + "']);",
             "_gaq.push(['_trackPageview']);",
             "(function() {",
@@ -22,17 +22,17 @@ function addGa(html) {
             "  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);",
             "})();",
             "</script>"
-            ].join("\n");
+        ].join("\n");
         html = html.replace("</body>", ga + "\n\n</body>");
     }
     return html;
 }
 
 function googleAnalyticsMiddleware(data) {
-    if (data.contentType == 'text/html') {
+    if (data.contentType && data.contentType.includes('text/html')) {
         data.stream = data.stream.pipe(new Transform({
             decodeStrings: false,
-            transform: function(chunk, encoding, next) {
+            transform: function (chunk, encoding, next) {
                 this.push(addGa(chunk.toString()));
                 next();
             }
@@ -56,13 +56,18 @@ app.use(unblocker);
 
 app.use('/', express.static(__dirname + '/public'));
 
-app.get("/no-js", function(req, res) {
-    var site = querystring.parse(url.parse(req.url).query).url;
-    res.redirect(unblockerConfig.prefix + site);
+app.get("/no-js", function (req, res) {
+    const site = req.query.url;
+
+    if (site && site.trim()) {
+        let targetUrl = site.trim();
+        if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+            targetUrl = 'https://' + targetUrl;
+        }
+        res.redirect(unblockerConfig.prefix + targetUrl);
+    } else {
+        res.redirect('/');
+    }
 });
 
-const port = process.env.PORT || process.env.VCAP_APP_PORT || 8080;
-
-app.listen(port, function() {
-    console.log(`node unblocker process listening at http://localhost:${port}/`);
-}).on("upgrade", unblocker.onUpgrade);
+module.exports = app;
