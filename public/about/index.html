@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Ovola</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styling/other.css">
+</head>
+
+<body>
+    <div class="theme-switcher" id="theme-switcher" title="Toggle Theme">
+        <div class="sun-icon"><i class="fa-solid fa-sun"></i></div>
+        <div class="moon-icon" style="display:none;"><i class="fa-solid fa-moon"></i></div>
+    </div>
+    <main>
+        <div class="content-wrapper">
+            <header class="hero-banner animate-in">
+                <h1>About Ovola</h1>
+                <p>An elegant, fast, and modern web povola for a truly open internet.</p>
+            </header>
+
+            <section class="content-section animate-in">
+                <h3>Our Philosophy</h3>
+                <p>Ovola was created with a simple belief: access to information should be unrestricted. In a digital
+                    age
+                    where censorship and content blocks are increasingly common, we provide a clean, fast, and reliable
+                    tool to navigate the web freely. We prioritize speed, privacy, and simplicity above all else.</p>
+            </section>
+
+            <section class="content-section animate-in">
+                <h3>The Technology</h3>
+                <p>This service is a public instance of the powerful and open-source Node Unblocker engine. Unlike older
+                    povola scripts that can be slow and clunky, Node Unblocker processes web traffic in real-time,
+                    ensuring a smooth and responsive browsing experience. It's built on Node.js for maximum performance
+                    and efficiency.</p>
+            </section>
+
+            <section class="content-section animate-in">
+                <h3>The Creator</h3>
+                <p>Ovola is maintained and designed by EndOverdosing. You can find more of my work and projects on my <a
+                        href="https://github.com/EndOverdosing" target="_blank" rel="noopener noreferrer">GitHub
+                        profile</a>. I am passionate about creating tools that empower users and champion a free, open
+                    internet.</p>
+            </section>
+        </div>
+    </main>
+    <footer class="page-footer">
+        <nav>
+            Ovola by EndOverdosing &bull;
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms-of-service">Terms</a>
+        </nav>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getEl = (selector) => document.querySelector(selector), themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
+            const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } }, getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+            function applyTheme(theme) { document.body.classList.toggle('light-theme', theme === 'light'); sunIcon.style.display = theme === 'light' ? 'flex' : 'none'; moonIcon.style.display = theme === 'light' ? 'none' : 'flex'; }
+            let currentTheme = getPreference('theme') || 'dark'; applyTheme(currentTheme);
+            themeSwitcher.addEventListener('click', () => { currentTheme = currentTheme === 'light' ? 'dark' : 'light'; savePreference('theme', currentTheme); applyTheme(currentTheme); });
+
+            document.addEventListener('mousemove', e => {
+                document.body.style.setProperty('--cursor-x', `${e.clientX}px`);
+                document.body.style.setProperty('--cursor-y', `${e.clientY}px`);
+                document.body.style.setProperty('--cursor-opacity', '1');
+            });
+            window.addEventListener('scroll', () => {
+                document.body.style.setProperty('--scroll-y', window.scrollY);
+            });
+            document.querySelectorAll('.interactive-border').forEach(element => {
+                element.addEventListener('mousemove', e => {
+                    const rect = element.getBoundingClientRect();
+                    element.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                    element.style.setProperty('--y', `${e.clientY - rect.top}px`);
+                    element.style.setProperty('--opacity', '1');
+                });
+                element.addEventListener('mouseleave', () => element.style.setProperty('--opacity', '0'));
+            });
+        });
+    </script>
+</body>
+
+</html>

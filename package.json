@@ -1,0 +1,21 @@
+{
+  "name": "nodeunblocker.com",
+  "description": "Web povola for evading internet censorship",
+  "author": "Nathan Friedly - http://nfriedly.com",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "https://github.com/nfriedly/nodeunblocker.com/",
+  "dependencies": {
+    "express": "^4.13.0",
+    "gatling": "^2.0.0",
+    "unblocker": "^2.3.1",
+    "ytdl-core": "^4.11.5"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "start": "gatling app.js"
+  },
+  "license": "AGPL-3.0"
+}

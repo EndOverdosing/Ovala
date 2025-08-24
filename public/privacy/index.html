@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Ovola</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styling/other.css">
+</head>
+
+<body>
+    <div class="theme-switcher" id="theme-switcher" title="Toggle Theme">
+        <div class="sun-icon"><i class="fa-solid fa-sun"></i></div>
+        <div class="moon-icon" style="display:none;"><i class="fa-solid fa-moon"></i></div>
+    </div>
+    <main>
+        <div class="content-wrapper">
+            <header class="hero-banner animate-in">
+                <h1>Privacy Policy</h1>
+                <p>Your privacy is fundamental. We are committed to protecting it.</p>
+            </header>
+
+            <section class="content-section animate-in">
+                <h3>Data Collection</h3>
+                <p>We do not store or log the websites you visit or any data you submit through the povola. All traffic
+                    is
+                    processed in-memory and discarded immediately. No personal information is required to use this
+                    service.
+                </p>
+            </section>
+
+            <section class="content-section animate-in">
+                <h3>Analytics</h3>
+                <p>This site may use minimal, anonymous analytics to track overall service usage (e.g., number of
+                    visitors),
+                    but this does not track your specific browsing activity through the povola. This helps us understand
+                    server load and improve the service.</p>
+            </section>
+
+            <section class="content-section animate-in">
+                <h3>Cookies & Third Parties</h3>
+                <p>Be aware that while we protect your privacy on our end, the websites you visit can still track you
+                    with
+                    cookies and other technologies. Using a povola does not make you completely anonymous online. Ovola
+                    does
+                    not set any tracking cookies of its own.</p>
+            </section>
+        </div>
+    </main>
+    <footer class="page-footer">
+        <nav>
+            Ovola by EndOverdosing &bull;
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms-of-service">Terms</a>
+        </nav>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getEl = (selector) => document.querySelector(selector), themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
+            const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } }, getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+            function applyTheme(theme) { document.body.classList.toggle('light-theme', theme === 'light'); sunIcon.style.display = theme === 'light' ? 'flex' : 'none'; moonIcon.style.display = theme === 'light' ? 'none' : 'flex'; }
+            let currentTheme = getPreference('theme') || 'dark'; applyTheme(currentTheme);
+            themeSwitcher.addEventListener('click', () => { currentTheme = currentTheme === 'light' ? 'dark' : 'light'; savePreference('theme', currentTheme); applyTheme(currentTheme); });
+
+            document.addEventListener('mousemove', e => {
+                document.body.style.setProperty('--cursor-x', `${e.clientX}px`);
+                document.body.style.setProperty('--cursor-y', `${e.clientY}px`);
+                document.body.style.setProperty('--cursor-opacity', '1');
+            });
+            window.addEventListener('scroll', () => {
+                document.body.style.setProperty('--scroll-y', window.scrollY);
+            });
+            document.querySelectorAll('.interactive-border').forEach(element => {
+                element.addEventListener('mousemove', e => {
+                    const rect = element.getBoundingClientRect();
+                    element.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                    element.style.setProperty('--y', `${e.clientY - rect.top}px`);
+                    element.style.setProperty('--opacity', '1');
+                });
+                element.addEventListener('mouseleave', () => element.style.setProperty('--opacity', '0'));
+            });
+        });
+    </script>
+</body>
+
+</html>

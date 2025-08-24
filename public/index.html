@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ovala - A fast and modern web proxy.">
+  <meta property="og:image" content="/images/banner.png" />
+  <meta property="og:title" content="Ovala - Proxy" />
+  <meta property="og:description" content="Ovala - A fast and modern web proxy.">
+  <meta property="og:url" content="https://roxy.vercel.app/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ovala - Proxy">
+  <meta name="twitter:description" content="Ovala - A fast and modern web proxy.">
+  <meta name="twitter:image" content="/images/banner.png">
+  <title>Ovala - Proxy</title>
+  <link rel="icon" href="/images/favicon.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styling/index.css">
+</head>
+
+<body>
+  <div class="theme-switcher" id="theme-switcher" title="Toggle Theme">
+    <div class="sun-icon"><i class="fa-solid fa-sun"></i></div>
+    <div class="moon-icon" style="display:none;"><i class="fa-solid fa-moon"></i></div>
+  </div>
+
+  <main>
+    <div class="main-content-wrapper">
+      <header class="hero-header animate-in">
+        <h1>Ovala</h1>
+        <p class="subtitle">An elegant, fast, and modern web proxy.</p>
+      </header>
+
+      <form class="url-form-container animate-in" id="unblocker-form">
+        <div class="url-form interactive-border">
+          <i class="fa-solid fa-link form-icon"></i>
+          <input type="text" id="url" name="url" placeholder="Enter URL or Search..." autofocus autocomplete="off" />
+          <button type="button" class="clear-button" title="Clear input"><i class="fa-solid fa-xmark"></i></button>
+          <button id="submit-button" type="submit">
+            <span class="icon-container icon-go"><i class="fa-solid fa-arrow-right"></i></span>
+            <span class="icon-container spinner"><i class="fa-solid fa-spinner"></i></span>
+          </button>
+        </div>
+      </form>
+
+      <div id="error-container"></div>
+      <div id="history-container" class="animate-in"></div>
+
+      <p class="about-text animate-in">
+        Ovala is a fast, modern web proxy built on the open-source Node Unblocker engine. The original engine's source
+        code is on <a href="https://github.com/nfriedly/node-unblocker" target="_blank"
+          rel="noopener noreferrer">GitHub</a>.
+      </p>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <nav>
+      Ovala by EndOverdosing &bull;
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms-of-service">Terms</a>
+    </nav>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const getEl = (selector) => document.querySelector(selector);
+      const themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
+      const unblockerForm = getEl('#unblocker-form'), urlInput = getEl('#url'), submitButton = getEl('#submit-button');
+      const clearButton = getEl('.clear-button'), historyContainer = getEl('#history-container');
+
+      const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } };
+      const getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+
+      function applyTheme(theme) {
+        document.body.classList.toggle('light-theme', theme === 'light');
+        sunIcon.style.display = theme === 'light' ? 'flex' : 'none';
+        moonIcon.style.display = theme === 'light' ? 'none' : 'flex';
+      }
+
+      let currentTheme = getPreference('theme') || 'dark';
+      applyTheme(currentTheme);
+
+      themeSwitcher.addEventListener('click', () => {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        savePreference('theme', currentTheme);
+        applyTheme(currentTheme);
+      });
+
+      document.addEventListener('mousemove', e => { document.body.style.setProperty('--cursor-x', `${e.clientX}px`); document.body.style.setProperty('--cursor-y', `${e.clientY}px`); document.body.style.setProperty('--cursor-opacity', '1'); });
+
+      document.querySelectorAll('.interactive-border').forEach(element => {
+        element.addEventListener('mousemove', e => {
+          const rect = element.getBoundingClientRect();
+          element.style.setProperty('--x', `${e.clientX - rect.left}px`);
+          element.style.setProperty('--y', `${e.clientY - rect.top}px`);
+          element.style.setProperty('--opacity', '1');
+        });
+        element.addEventListener('mouseleave', () => element.style.setProperty('--opacity', '0'));
+      });
+
+      urlInput.addEventListener('input', () => clearButton.classList.toggle('visible', urlInput.value.length > 0));
+      clearButton.addEventListener('click', () => { urlInput.value = ''; urlInput.focus(); clearButton.classList.remove('visible'); });
+
+      const getHistory = () => JSON.parse(getPreference('roxy_history') || '[]');
+      function addToHistory(url) {
+        if (url.includes('google.com/search')) return;
+        let history = getHistory().filter(item => item !== url);
+        history.unshift(url);
+        savePreference('roxy_history', JSON.stringify(history.slice(0, 4)));
+      }
+      function renderHistory() {
+        historyContainer.innerHTML = getHistory().map(url => {
+          const domain = new URL(url).hostname.replace('www.', '');
+          return `<div class="history-item" data-url="${url}" title="${url}"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 0.5rem;"></i>${domain}</div>`;
+        }).join('');
+        historyContainer.querySelectorAll('.history-item').forEach(item => {
+          item.onclick = () => { urlInput.value = item.dataset.url; unblockerForm.requestSubmit(); };
+        });
+      }
+
+      unblockerForm.addEventListener('submit', e => {
+        e.preventDefault(); let urlValue = urlInput.value.trim(); if (!urlValue) return;
+        submitButton.classList.add('loading'); submitButton.disabled = true; urlInput.disabled = true;
+        const finalUrl = (!urlValue.startsWith('http')) ? (urlValue.includes('.') && !urlValue.includes(' ') ? "https://" + urlValue : "https://www.google.com/search?q=" + encodeURIComponent(urlValue)) : urlValue;
+        addToHistory(finalUrl);
+        setTimeout(() => { window.location.href = `${location.protocol}//${location.host}/proxy/${finalUrl}`; }, 600);
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { urlInput.value = ''; urlInput.blur(); clearButton.classList.remove('visible'); }
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); urlInput.focus(); }
+      });
+
+      try { const err = new URLSearchParams(window.location.search).get('error'); if (err) getEl('#error-container').innerHTML = `<div style="background-color: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.2); color: #ff9494; padding: 1.25rem; border-radius: 20px; text-align: center; font-weight: 500;">${decodeURIComponent(err.replace(/\+/g, ' '))}</div>`; } catch (e) { }
+
+      urlInput.focus(); renderHistory();
+    });
+  </script>
+</body>
+
+</html>

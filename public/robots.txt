@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /povola/http
+Disallow: /povola/http:
+Disallow: /povola/http:/
+Disallow: /povola/https
+Disallow: /povola/https:
+Disallow: /povola/https:/
