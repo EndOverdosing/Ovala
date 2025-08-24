@@ -40,9 +40,32 @@ function googleAnalyticsMiddleware(data) {
     }
 }
 
+function fixMalformedUrlMiddleware(data) {
+    if (data.url.startsWith('https:/') && !data.url.startsWith('https://')) {
+        data.url = data.url.replace('https:/', 'https://');
+    }
+    if (data.url.startsWith('http:/') && !data.url.startsWith('http://')) {
+        data.url = data.url.replace('http:/', 'http://');
+    }
+}
+
+function blockAdsMiddleware(data) {
+    const adHosts = [
+        'googlesyndication.com', 'googleadservices.com', 'doubleclick.net',
+        'adservice.google.com', 'pagead2.googlesyndication.com', 'securepubads.g.doubleclick.net',
+    ];
+    if (adHosts.some(host => data.url.includes(host))) {
+        console.log(`Blocking ad request to: ${data.url}`);
+        data.setHeader('Content-Type', 'application/javascript');
+        data.end('// Ad blocked by proxy');
+    }
+}
+
 var unblockerConfig = {
     prefix: '/proxy/',
     requestMiddleware: [
+        blockAdsMiddleware,
+        fixMalformedUrlMiddleware,
         youtube.processRequest
     ],
     responseMiddleware: [

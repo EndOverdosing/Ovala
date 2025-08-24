@@ -124,11 +124,22 @@
       }
 
       unblockerForm.addEventListener('submit', e => {
-        e.preventDefault(); let urlValue = urlInput.value.trim(); if (!urlValue) return;
-        submitButton.classList.add('loading'); submitButton.disabled = true; urlInput.disabled = true;
-        const finalUrl = (!urlValue.startsWith('http')) ? (urlValue.includes('.') && !urlValue.includes(' ') ? "https://" + urlValue : "https://www.google.com/search?q=" + encodeURIComponent(urlValue)) : urlValue;
+        e.preventDefault();
+        let urlValue = urlInput.value.trim();
+        if (!urlValue) return;
+
+        submitButton.classList.add('loading');
+        submitButton.disabled = true;
+        urlInput.disabled = true;
+
+        const isUrl = urlValue.includes('.') && !urlValue.includes(' ');
+        const finalUrl = urlValue.startsWith('http') ? urlValue :
+          isUrl ? "https://" + urlValue :
+            "https://www.google.com/search?q=" + encodeURIComponent(urlValue);
+
         addToHistory(finalUrl);
-        setTimeout(() => { window.location.href = `${location.protocol}//${location.host}/proxy/${finalUrl}`; }, 600);
+
+        window.location.href = `/no-js?url=${encodeURIComponent(finalUrl)}`;
       });
 
       document.addEventListener('keydown', e => {
