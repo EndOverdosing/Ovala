@@ -1,6 +1,6 @@
 {
   "name": "nodeunblocker.com",
-  "description": "Web povola for evading internet censorship",
+  "description": "Web proxy for evading internet censorship",
   "author": "Nathan Friedly - http://nfriedly.com",
   "version": "1.0.0",
   "private": true,
