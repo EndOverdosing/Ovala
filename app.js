@@ -13,14 +13,14 @@ var google_analytics_id = process.env.GA_ID || null;
 function addGa(html) {
     if (google_analytics_id) {
         var ga = [
-            "<script type=\"text/javascript\">",
+            "<script type='text/javascript'>",
             "var _gaq = [];",
             "_gaq.push(['_setAccount', '" + google_analytics_id + "']);",
             "_gaq.push(['_trackPageview']);",
             "(function() {",
-            "  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;",
-            "  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';",
-            "  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);",
+            " var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;",
+            " ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';",
+            " var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);",
             "})();",
             "</script>"
         ].join("\n");
@@ -50,10 +50,24 @@ function fixMalformedUrlMiddleware(data) {
     }
 }
 
+function addUserAgentMiddleware(data) {
+    data.headers['user-agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36';
+}
+
+function setHostMiddleware(data) {
+    try {
+        const url = new URL(data.url);
+        data.headers['host'] = url.hostname;
+    } catch (e) {
+        console.error('Error setting host header:', e.message);
+    }
+}
 
 var unblockerConfig = {
     prefix: '/proxy/',
     requestMiddleware: [
+        addUserAgentMiddleware,
+        setHostMiddleware,
         fixMalformedUrlMiddleware,
         youtube.processRequest
     ],
@@ -70,7 +84,6 @@ app.use('/', express.static(__dirname + '/public'));
 
 app.get("/no-js", function (req, res) {
     const site = req.query.url;
-
     if (site && site.trim()) {
         let targetUrl = site.trim();
         if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
@@ -82,16 +95,14 @@ app.get("/no-js", function (req, res) {
     }
 });
 
-
 app.use(function (err, req, res, next) {
     console.error("Proxy Error:", err);
     const errorMessage = "The requested URL could not be found or is currently unavailable.";
     res.redirect(`/?error=${encodeURIComponent(errorMessage)}`);
 });
 
-
 app.use(function (req, res, next) {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
-module.exports = app;
+module.exports = (req, res) => app(req, res);

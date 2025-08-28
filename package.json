@@ -1,23 +1,17 @@
 {
-  "name": "nodeunblocker.com",
-  "description": "Web proxy for evading internet censorship",
-  "author": "Nathan Friedly - http://nfriedly.com",
+  "name": "ovala-proxy",
   "version": "1.0.0",
-  "private": true,
-  "homepage": "https://github.com/nfriedly/nodeunblocker.com/",
+  "description": "Ovala Web Proxy",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
-    "express": "^4.13.0",
-    "gatling": "^2.0.0",
-    "patch-package": "^8.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.2.0",
+    "helmet": "^7.1.0",
     "unblocker": "^2.3.1",
     "ytdl-core": "^4.11.5"
-  },
-  "engines": {
-    "node": ">=6"
-  },
-  "scripts": {
-    "start": "gatling app.js",
-    "postinstall": "patch-package"
-  },
-  "license": "AGPL-3.0"
+  }
 }
