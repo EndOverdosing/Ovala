@@ -21,7 +21,7 @@ You can easily deploy your own instance of **Ovala** or run it locally.
 
 Click the button below to deploy your own instance of **Ovala** to Vercel in minutes.
 
-![alt text](https://vercel.com/button)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/endoverdosing/Ovala)
 
 **Running Locally**
 
