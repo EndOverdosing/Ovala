@@ -5,104 +5,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ovala - A fast and modern web proxy.">
-    <meta property="og:image" content="/images/banner.png" />
-    <meta property="og:title" content="Ovala - Terms of Service" />
+    <meta property="og:image" content="/images/banner.png">
+    <meta property="og:title" content="Ovala - Terms of Service">
     <meta property="og:description" content="Ovala - A fast and modern web proxy.">
     <meta property="og:url" content="https://ovala.vercel.app/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Ovala - Terms of Service">
     <meta name="twitter:description" content="Ovala - A fast and modern web proxy.">
     <meta name="twitter:image" content="/images/banner.png">
-    <title>Ovala - Terms of Service</title>
+    <title>Ovala — Terms of Service</title>
     <link rel="icon" href="/images/favicon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/styling/other.css">
     <link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
-    <div class="theme-switcher" id="theme-switcher" title="Toggle Theme">
-        <div class="sun-icon"><i class="fa-solid fa-sun"></i></div>
-        <div class="moon-icon" style="display:none;"><i class="fa-solid fa-moon"></i></div>
-    </div>
-    <main>
-        <div class="content-wrapper">
-            <header class="hero-banner animate-in">
-                <h1>Terms of Service</h1>
-                <p>The rules and guidelines for using our service. By using Ovola, you agree to these terms.</p>
-            </header>
 
-            <section class="content-section animate-in">
-                <h3>Acceptance of Terms</h3>
-                <p>By accessing or using Ovola ("the Service"), you agree to be bound by these Terms of Service. This is
-                    a
-                    legally binding agreement between you and the Service provider ("we", "us"). If you disagree with
-                    any
-                    part of the terms, then you may not access the Service.</p>
-            </section>
-
-            <section class="content-section animate-in">
-                <h3>Acceptable Use</h3>
-                <p>You agree to use the Service only for lawful purposes. You are strictly prohibited from using the
-                    Service
-                    for any of the following:</p>
-                <ul>
-                    <li>Engaging in any illegal activities, including but not limited to hacking, fraud, distributing
-                        malware, or accessing illicit content.</li>
-                    <li>Using the Service for any commercial purpose without our express written consent.</li>
-                    <li>Abusing the service through automated scripts, excessive bandwidth usage, or any action that
-                        could
-                        disrupt or impair the service for other users.</li>
-                </ul>
-            </section>
-
-            <section class="content-section animate-in">
-                <h3>Disclaimers and Limitation of Liability</h3>
-                <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis without any warranties of any kind. We
-                    do
-                    not guarantee that the service will be secure, uninterrupted, or error-free. In no event shall we be
-                    liable for any direct, indirect, or consequential damages resulting from your use of, or inability
-                    to
-                    use, the Service.</p>
-            </section>
+    <header>
+        <a href="/" class="logo">OVALA<span class="dot">.</span></a>
+        <div class="nav-right">
+            <button class="round-btn" id="theme-btn" title="Toggle theme">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+            </button>
         </div>
+    </header>
+
+    <main>
+        <a href="/" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+
+        <p class="page-eyebrow">Legal</p>
+        <h1 class="page-title">TERMS</h1>
+        <div class="page-divider"></div>
+
+        <section class="content-section">
+            <h3>Acceptance of Terms</h3>
+            <p>By accessing or using Ovala ("the Service"), you agree to be bound by these Terms of Service. This is a
+                legally binding agreement between you and the Service provider ("we", "us"). If you disagree with any
+                part of the terms, then you may not access the Service.</p>
+        </section>
+
+        <section class="content-section">
+            <h3>Acceptable Use</h3>
+            <p>You agree to use the Service only for lawful purposes. You are strictly prohibited from using the Service
+                for any of the following:</p>
+            <ul>
+                <li>Engaging in any illegal activities, including but not limited to hacking, fraud, distributing
+                    malware, or accessing illicit content.</li>
+                <li>Using the Service for any commercial purpose without our express written consent.</li>
+                <li>Abusing the service through automated scripts, excessive bandwidth usage, or any action that could
+                    disrupt or impair the service for other users.</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h3>Disclaimers and Limitation of Liability</h3>
+            <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis without any warranties of any kind. We do
+                not guarantee that the service will be secure, uninterrupted, or error-free. In no event shall we be
+                liable for any direct, indirect, or consequential damages resulting from your use of, or inability to
+                use, the Service.</p>
+        </section>
     </main>
-    <footer class="page-footer">
-        <nav>
+
+    <footer>
+        <a href="/" class="footer-mark">OVALA</a>
+        <nav class="footer-links">
             <a href="/">Home</a>
             <a href="/about">About</a>
             <a href="https://discord.gg/zaCCvUtndf" target="_blank" rel="noopener noreferrer">Discord</a>
             <a href="/privacy">Privacy</a>
             <a href="/terms-of-service">Terms</a>
         </nav>
+        <span class="footer-copy">&copy; 2025 Ovala</span>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const getEl = (selector) => document.querySelector(selector), themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
-            const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } }, getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
-            function applyTheme(theme) { document.body.classList.toggle('light-theme', theme === 'light'); sunIcon.style.display = theme === 'light' ? 'flex' : 'none'; moonIcon.style.display = theme === 'light' ? 'none' : 'flex'; }
-            let currentTheme = getPreference('theme') || 'dark'; applyTheme(currentTheme);
-            themeSwitcher.addEventListener('click', () => { currentTheme = currentTheme === 'light' ? 'dark' : 'light'; savePreference('theme', currentTheme); applyTheme(currentTheme); });
 
-            document.addEventListener('mousemove', e => {
-                document.body.style.setProperty('--cursor-x', `${e.clientX}px`);
-                document.body.style.setProperty('--cursor-y', `${e.clientY}px`);
-                document.body.style.setProperty('--cursor-opacity', '1');
-            });
-            window.addEventListener('scroll', () => {
-                document.body.style.setProperty('--scroll-y', window.scrollY);
-            });
-            document.querySelectorAll('.interactive-border').forEach(element => {
-                element.addEventListener('mousemove', e => {
-                    const rect = element.getBoundingClientRect();
-                    element.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                    element.style.setProperty('--y', `${e.clientY - rect.top}px`);
-                    element.style.setProperty('--opacity', '1');
-                });
-                element.addEventListener('mouseleave', () => element.style.setProperty('--opacity', '0'));
-            });
-        });
+    <script>
+        const store = {
+            get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+            set: (k, v) => { try { localStorage.setItem(k, v); } catch { } }
+        };
+        let theme = store.get('ovala_theme') || 'light';
+        const applyTheme = t => { document.body.classList.toggle('dark', t === 'dark'); theme = t; };
+        applyTheme(theme);
+        document.getElementById('theme-btn').onclick = () => {
+            applyTheme(theme === 'dark' ? 'light' : 'dark');
+            store.set('ovala_theme', theme);
+        };
     </script>
 </body>
 

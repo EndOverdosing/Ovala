@@ -18,228 +18,202 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styling/index.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+    rel="stylesheet">
   <link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
-  <div class="top-right-controls">
-    <button id="history-toggle-button" class="icon-button" title="View History">
-      <i class="fa-solid fa-clock-rotate-left"></i>
-    </button>
-    <div class="theme-switcher" id="theme-switcher" title="Toggle Theme">
-      <div class="sun-icon"><i class="fa-solid fa-sun"></i></div>
-      <div class="moon-icon" style="display:none;"><i class="fa-solid fa-moon"></i></div>
-    </div>
-  </div>
 
-  <main>
-    <div class="main-content-wrapper">
-      <header class="hero-header animate-in">
-        <h1>Ovala</h1>
-        <p class="subtitle">An elegant, fast, and modern web proxy.</p>
-        <a href="https://discord.gg/zaCCvUtndf" class="discord-button interactive-border" target="_blank"
-          rel="noopener noreferrer">
-          <i class="fa-brands fa-discord"></i> Join The Community
-        </a>
-      </header>
-
-      <form class="url-form-container animate-in" id="unblocker-form">
-        <div class="url-form interactive-border">
-          <i class="fa-solid fa-link form-icon"></i>
-          <input type="text" id="url" name="url" placeholder="Enter URL or Search..." autofocus autocomplete="off" />
-          <button type="button" class="clear-button" title="Clear input"><i class="fa-solid fa-xmark"></i></button>
-          <button id="submit-button" type="submit">
-            <span class="icon-container icon-go"><i class="fa-solid fa-arrow-right"></i></span>
-            <span class="icon-container spinner"><i class="fa-solid fa-spinner"></i></span>
-          </button>
-        </div>
-      </form>
-
-      <div id="error-container"></div>
-
-      <p class="about-text animate-in">
-        Ovala is a fast, modern web proxy built on the open-source Node Unblocker engine. The original engine's source
-        code is on <a href="https://github.com/nfriedly/node-unblocker" target="_blank"
-          rel="noopener noreferrer">GitHub</a>.
-      </p>
-    </div>
-  </main>
-
-  <div id="modal-overlay" class="hidden"></div>
-  <div id="history-modal" class="hidden interactive-border">
-    <div class="modal-header">
-      <h2><i class="fa-solid fa-clock-rotate-left"></i> History</h2>
-      <button id="modal-close-button" title="Close"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="modal-content">
-      <ul id="history-list"></ul>
-    </div>
-    <div class="modal-footer">
-      <button id="clear-history-button">Clear History</button>
-    </div>
-  </div>
-
-
-  <footer class="page-footer">
-    <nav>
-      <a href="/">Home</a>
+  <header>
+    <a href="/" class="logo">OVALA<span class="dot">.</span></a>
+    <nav class="nav-links">
       <a href="/about">About</a>
-      <a href="https://discord.gg/zaCCvUtndf" target="_blank" rel="noopener noreferrer">Discord</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms-of-service">Terms</a>
     </nav>
+    <div class="nav-right">
+      <a href="https://discord.gg/zaCCvUtndf" class="pill-btn" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-discord"></i> Discord
+      </a>
+      <button class="round-btn" id="hist-btn" title="History">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </button>
+      <button class="round-btn" id="theme-btn" title="Toggle theme">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Open Access &nbsp;·&nbsp; Zero Logs &nbsp;·&nbsp; No Limits</p>
+      <h1 class="wordmark">OVALA</h1>
+      <p class="tagline">The fast, modern web proxy. Browse anything, instantly. Powered by open-source Node Unblocker.
+      </p>
+
+      <div class="search-container">
+        <div class="search-field">
+          <span class="s-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input id="proxy-url" type="text" placeholder="Enter URL or search anything…" autocomplete="off" autofocus>
+          <button class="s-clear" id="s-clear"><i class="fa-solid fa-xmark"></i></button>
+          <button class="s-submit" id="s-submit">
+            <i class="fa-solid fa-arrow-right arrow"></i>
+            <span class="arrow">Go</span>
+            <i class="fa-solid fa-spinner spin"></i>
+          </button>
+        </div>
+        <div class="err-box" id="err-box"></div>
+      </div>
+    </section>
+
+    <div class="band">
+      <div class="band-cell">
+        <div class="band-label">Engine</div>
+        <div class="band-stat">NODE</div>
+        <div class="band-copy">Open-source Node Unblocker. Trusted, proven, fast.</div>
+      </div>
+      <div class="band-cell">
+        <div class="band-label">Performance</div>
+        <div class="band-stat">FAST</div>
+        <div class="band-copy">Direct routing. No middleman. Pages load instantly.</div>
+      </div>
+      <div class="band-cell">
+        <div class="band-label">Privacy</div>
+        <div class="band-stat">ZERO</div>
+        <div class="band-copy">Zero logs. Zero tracking. Your session stays yours.</div>
+      </div>
+      <div class="band-cell">
+        <div class="band-label">Access</div>
+        <div class="band-stat">ALL</div>
+        <div class="band-copy">Any site, any search. Unrestricted, always on.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/" class="footer-mark">OVALA</a>
+    <nav class="footer-links">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="https://discord.gg/zaCCvUtndf" target="_blank" rel="noopener">Discord</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms-of-service">Terms</a>
+    </nav>
+    <span class="footer-copy">&copy; 2025 Ovala</span>
   </footer>
 
+  <div id="overlay"></div>
+  <div id="hist-modal">
+    <div class="mhead">
+      <span class="mhead-title">HISTORY</span>
+      <button class="mclose" id="mclose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul id="hist-list"></ul>
+    <div class="mfoot">
+      <button id="clear-hist">Clear All</button>
+    </div>
+  </div>
+
   <script>
-    const getEl = (selector) => document.querySelector(selector);
-    const themeSwitcher = getEl('#theme-switcher'), sunIcon = getEl('.sun-icon'), moonIcon = getEl('.moon-icon');
-    const unblockerForm = getEl('#unblocker-form'), urlInput = getEl('#url'), submitButton = getEl('#submit-button');
-    const clearButton = getEl('.clear-button'), errorContainer = getEl('#error-container');
-    const historyToggleButton = getEl('#history-toggle-button');
-    const historyModal = getEl('#history-modal'), modalOverlay = getEl('#modal-overlay');
-    const modalCloseButton = getEl('#modal-close-button'), historyList = getEl('#history-list'), clearHistoryButton = getEl('#clear-history-button');
+    const $ = s => document.querySelector(s);
+    const store = {
+      get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+      set: (k, v) => { try { localStorage.setItem(k, v); } catch { } }
+    };
 
-    function initializeApp() {
-      const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { } };
-      const getPreference = (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+    const input = $('#proxy-url');
+    const clearBtn = $('#s-clear');
+    const submit = $('#s-submit');
+    const errBox = $('#err-box');
+    const histBtn = $('#hist-btn');
+    const themeBtn = $('#theme-btn');
+    const overlay = $('#overlay');
+    const modal = $('#hist-modal');
+    const mclose = $('#mclose');
+    const histList = $('#hist-list');
+    const clearH = $('#clear-hist');
 
-      function applyTheme(theme) {
-        document.body.classList.toggle('light-theme', theme === 'light');
-        sunIcon.style.display = theme === 'light' ? 'flex' : 'none';
-        moonIcon.style.display = theme === 'light' ? 'none' : 'flex';
+    let theme = store.get('ovala_theme') || 'light';
+    const applyTheme = t => { document.body.classList.toggle('dark', t === 'dark'); theme = t; };
+    applyTheme(theme);
+    themeBtn.onclick = () => { applyTheme(theme === 'dark' ? 'light' : 'dark'); store.set('ovala_theme', theme); };
+
+    input.addEventListener('input', () => {
+      clearBtn.classList.toggle('show', input.value.length > 0);
+      errBox.classList.remove('show');
+    });
+    clearBtn.onclick = () => { input.value = ''; input.focus(); clearBtn.classList.remove('show'); };
+
+    const getHist = () => JSON.parse(store.get('ovala_hist') || '[]');
+    const saveHist = h => store.set('ovala_hist', JSON.stringify(h));
+
+    const renderHist = () => {
+      const h = getHist();
+      histList.innerHTML = '';
+      if (!h.length) {
+        const li = document.createElement('li');
+        li.className = 'no-hist';
+        li.textContent = 'No history yet.';
+        histList.appendChild(li);
+        return;
       }
-      let currentTheme = getPreference('theme') || 'dark';
-      applyTheme(currentTheme);
-      themeSwitcher.onclick = () => {
-        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-        savePreference('theme', currentTheme);
-        applyTheme(currentTheme);
-      };
-
-      document.addEventListener('mousemove', e => { document.body.style.setProperty('--cursor-x', `${e.clientX}px`); document.body.style.setProperty('--cursor-y', `${e.clientY}px`); document.body.style.setProperty('--cursor-opacity', '1'); });
-      document.querySelectorAll('.interactive-border').forEach(element => {
-        element.addEventListener('mousemove', e => {
-          const rect = element.getBoundingClientRect();
-          element.style.setProperty('--x', `${e.clientX - rect.left}px`);
-          element.style.setProperty('--y', `${e.clientY - rect.top}px`);
-          element.style.setProperty('--opacity', '1');
-        });
-        element.addEventListener('mouseleave', () => element.style.setProperty('--opacity', '0'));
+      h.slice(0, 50).forEach(item => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `/no-js?url=${encodeURIComponent(item.url)}`;
+        a.textContent = item.title;
+        a.title = item.url;
+        const s = document.createElement('span');
+        s.className = 'h-host';
+        try { s.textContent = new URL(item.url).hostname.replace('www.', ''); } catch { s.textContent = '—'; }
+        li.appendChild(a); li.appendChild(s);
+        histList.appendChild(li);
       });
+    };
 
-      urlInput.addEventListener('input', () => clearButton.classList.toggle('visible', urlInput.value.length > 0));
-      clearButton.addEventListener('click', () => { urlInput.value = ''; urlInput.focus(); clearButton.classList.remove('visible'); });
+    const openModal = () => { renderHist(); modal.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden'; };
+    const closeModal = () => { modal.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; };
 
-      function manageHistory() {
-        const getHistory = () => JSON.parse(getPreference('proxyHistory') || '[]');
-        const saveHistory = (history) => savePreference('proxyHistory', JSON.stringify(history));
+    histBtn.onclick = openModal;
+    mclose.onclick = closeModal;
+    overlay.onclick = closeModal;
+    clearH.onclick = () => { saveHist([]); renderHist(); };
 
-        const toggleModal = (show) => {
-          historyModal.classList.toggle('hidden', !show);
-          modalOverlay.classList.toggle('hidden', !show);
-          document.body.style.overflow = show ? 'hidden' : '';
-        };
-
-        function renderHistory() {
-          const history = getHistory();
-          if (history.length > 0) {
-            historyList.innerHTML = '<li>No history yet.</li>';
-            historyList.innerHTML = '';
-            history.slice(0, 50).forEach(item => {
-              const li = document.createElement('li');
-              const a = document.createElement('a');
-              a.href = `/no-js?url=${encodeURIComponent(item.url)}`;
-              a.textContent = item.title;
-              a.title = item.url;
-              const span = document.createElement('span');
-              try {
-                span.textContent = new URL(item.url).hostname.replace('www.', '');
-              } catch (e) {
-                span.textContent = 'Invalid URL';
-              }
-              li.appendChild(a);
-              li.appendChild(span);
-              historyList.appendChild(li);
-            });
-          } else {
-            historyList.innerHTML = '<li class="no-history">No history yet.</li>';
-          }
-        }
-        historyToggleButton.addEventListener('click', () => {
-          renderHistory();
-          toggleModal(true);
-        });
-        modalCloseButton.addEventListener('click', () => toggleModal(false));
-        modalOverlay.addEventListener('click', () => toggleModal(false));
-        clearHistoryButton.addEventListener('click', () => {
-          savePreference('proxyHistory', '[]');
-          renderHistory();
-        });
-        document.addEventListener('keydown', e => {
-          if (e.key === 'Escape' && !historyModal.classList.contains('hidden')) {
-            toggleModal(false);
-          }
-        });
-        return {
-          addHistoryItem: (url, title) => {
-            let history = getHistory();
-            history = history.filter(item => item.url !== url);
-            history.unshift({ url, title });
-            if (history.length > 50) {
-              history = history.slice(0, 50);
-            }
-            saveHistory(history);
-          }
-        };
-      }
-      const historyManager = manageHistory();
-
-      unblockerForm.addEventListener('submit', e => {
-        e.preventDefault();
-        let urlValue = urlInput.value.trim();
-        if (!urlValue) return;
-
-        submitButton.classList.add('loading');
-        submitButton.disabled = true;
-        urlInput.disabled = true;
-
-        const isUrl = urlValue.includes('.') && !urlValue.includes(' ');
-        const finalUrl = urlValue.startsWith('http') ? urlValue :
-          isUrl ? "https://" + urlValue :
-            "https://www.google.com/search?q=" + encodeURIComponent(urlValue);
-
-        historyManager.addHistoryItem(finalUrl, urlValue);
-        window.location.href = `/no-js?url=${encodeURIComponent(finalUrl)}`;
-      });
-
-      document.addEventListener('keydown', e => {
-        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && historyModal.classList.contains('hidden')) {
-          e.preventDefault();
-          urlInput.focus();
-        }
-      });
-
-      try {
-        const err = new URLSearchParams(window.location.search).get('error');
-        if (err) {
-          errorContainer.style.zIndex = '100';
-          errorContainer.innerHTML = `<div style="background-color: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.2); color: #ff9494; padding: 1.25rem; border-radius: 20px; text-align: center; font-weight: 500;">${decodeURIComponent(err.replace(/\+/g, ' '))}</div>`;
-        }
-      } catch (e) { }
-
-      urlInput.disabled = false;
-      submitButton.disabled = false;
-      submitButton.classList.remove('loading');
-      urlInput.focus();
-      clearButton.classList.toggle('visible', urlInput.value.length > 0);
-    }
-
-    document.addEventListener('DOMContentLoaded', initializeApp);
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted) {
-        initializeApp();
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && !modal.classList.contains('open')) {
+        e.preventDefault(); input.focus();
       }
     });
+
+    const go = () => {
+      const val = input.value.trim();
+      if (!val) { errBox.textContent = 'Please enter a URL or search term.'; errBox.classList.add('show'); return; }
+      submit.classList.add('busy'); submit.disabled = true; input.disabled = true;
+      const isUrl = val.includes('.') && !val.includes(' ');
+      const final = val.startsWith('http') ? val
+        : isUrl ? 'https://' + val
+          : 'https://www.mojeek.com/search?q=' + encodeURIComponent(val) + '&theme=dark';
+      let h = getHist().filter(i => i.url !== final);
+      h.unshift({ url: final, title: val });
+      saveHist(h.slice(0, 50));
+      window.location.href = `/no-js?url=${encodeURIComponent(final)}`;
+    };
+
+    submit.onclick = go;
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+
+    window.addEventListener('pageshow', e => {
+      if (e.persisted) { submit.classList.remove('busy'); submit.disabled = false; input.disabled = false; }
+    });
+
+    try {
+      const e = new URLSearchParams(window.location.search).get('error');
+      if (e) { errBox.textContent = decodeURIComponent(e.replace(/\+/g, ' ')); errBox.classList.add('show'); }
+    } catch { }
   </script>
 </body>
 
