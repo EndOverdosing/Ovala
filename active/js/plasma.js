@@ -7,13 +7,17 @@ ctx.font = `${FONT_SIZE}px "Courier New", monospace`;
 const CW = Math.ceil(ctx.measureText('M').width);
 const CH = FONT_SIZE + 2;
 
+const OVERSHOOT = 150;
+
 let cols, rows, t = 0;
 
 function resize() {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight + OVERSHOOT * 2;
+
     cols = Math.ceil(canvas.width / CW) + 1;
     rows = Math.ceil(canvas.height / CH) + 1;
+
     ctx.font = `${FONT_SIZE}px "Courier New", monospace`;
     ctx.textBaseline = 'top';
 }

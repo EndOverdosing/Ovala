@@ -33,9 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(tick, 1000);
   }
 
-  const titleElement = document.createElement('h1');
-  titleElement.textContent = 'OVALA';
-
   const siteLabel = document.querySelector('.site-label');
   if (siteLabel) {
     siteLabel.parentNode.insertBefore(titleElement, siteLabel.nextSibling);
@@ -55,5 +52,5 @@ shuffled.forEach((span, i) => {
   setTimeout(() => {
     span.style.opacity = '1';
     span.style.filter = 'blur(0px)';
-  }, i * 300 + Math.random() * 300);
+  }, i * 500 + Math.random() * 500);
 });

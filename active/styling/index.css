@@ -28,47 +28,69 @@
     --dot-color: #292929;
 }
 
-html,
+html {
+    background: var(--bg);
+    min-height: 100%;
+    min-height: -webkit-fill-available;
+}
+
 body {
-    height: 100%;
-    height: 100dvh;
+    width: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     background: var(--bg);
     color: var(--fg);
     font-family: 'Courier New', monospace;
     overflow: hidden;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 body::before {
     content: '';
     position: fixed;
-    inset: 0;
+    inset: -100px;
     z-index: 2;
     background-image: radial-gradient(circle, var(--dot-color, #111) 0.5px, transparent 1px);
     background-size: 30px 30px;
     pointer-events: none;
-    overflow: hidden;
-}
-
-#c {
-    -webkit-mask-image: linear-gradient(to top, transparent, black 60%, black 90%, transparent);
-    mask-image: linear-gradient(to top, transparent, black 60%, black 90%, transparent);
-    overflow: hidden;
 }
 
 body::after {
     content: '';
     position: fixed;
-    inset: 0;
+    inset: -100px;
     z-index: 0;
     background-image: radial-gradient(circle, var(--dot-color, #111) 1.5px, transparent 1px);
     background-size: 18px 18px;
     -webkit-mask-image: radial-gradient(ellipse 60% 60% at center, transparent 25%, black 75%);
     mask-image: radial-gradient(ellipse 60% 60% at center, transparent 25%, black 75%);
     pointer-events: none;
-    overflow: hidden;
+}
+
+#c {
+    position: fixed;
+    top: -150px;
+    left: 0;
+    right: 0;
+    bottom: -150px;
+    width: 100%;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            black 12%,
+            black 88%,
+            transparent 100%);
+    mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            black 12%,
+            black 88%,
+            transparent 100%);
 }
 
 .logo {
@@ -158,19 +180,22 @@ form {
 }
 
 #uv-address {
-    background: transparent;
-    border: none;
-    outline: none;
+    background: var(--bg);
+    border: 1px solid var(--fg);
     color: var(--fg);
     font-family: 'Courier New', monospace;
     font-size: 0.72rem;
     letter-spacing: 0.12em;
-    padding: 0.5rem 0;
+    padding-left: 10px;
+    height: 50px;
     width: 100%;
     caret-color: var(--fg);
     -webkit-appearance: none;
     appearance: none;
     border-radius: 0;
+    line-height: 1.25;
+    display: flex;
+    align-items: center;
 }
 
 #uv-address::placeholder {
@@ -207,11 +232,20 @@ form {
 }
 
 .meta {
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-size: 0.6rem;
     letter-spacing: 0.2em;
     color: var(--dim);
-    line-height: 1.8;
+    background: var(--bg);
+    border: 1px solid var(--fg);
+    height: 50px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    line-height: 1.2;
+    text-align: center;
 }
 
 #uv-error {
@@ -261,16 +295,11 @@ form {
         width: 100%;
     }
 
-    #uv-address {
-        padding: 0.6rem 0;
-    }
-
     .submit-arrow {
         padding: 0.6rem 0 0.6rem 1rem;
     }
 
     .meta {
-        text-align: left;
         font-size: 0.6rem;
     }
 
@@ -302,67 +331,59 @@ form {
     }
 }
 
-.bottom-row {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 2rem;
-    pointer-events: all
-}
-
 .left-col {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem
+    gap: 0.5rem;
 }
 
 .err-msg {
     font-size: 0.6rem;
     letter-spacing: 0.22em;
     color: var(--dim);
-    text-transform: uppercase
+    text-transform: uppercase;
 }
 
 #uv-error {
     font-size: 0.58rem;
     letter-spacing: 0.1em;
-    color: rgba(232, 232, 232, 0.35)
+    color: rgba(232, 232, 232, 0.35);
 }
 
 #uv-error-code {
     font-size: 0.52rem;
-    color: var(--dim)
+    color: var(--dim);
 }
 
 .ascii-btn {
-    background: none;
-    border: none;
+    background: var(--bg);
+    border: 1px solid var(--fg);
     color: var(--fg);
     font-family: 'Courier New', monospace;
     font-size: 0.68rem;
     letter-spacing: 0.18em;
     cursor: pointer;
-    padding: 0;
+    padding: 0 10px;
     text-transform: uppercase;
-    opacity: 0.55;
-    transition: opacity 0.2s;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    width: fit-content;
+    width: 100%;
+    min-height: 50px;
+    transition: opacity 0.2s;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    min-height: 44px;
 }
 
 .ascii-btn:hover {
-    opacity: 1
+    opacity: 1;
 }
 
 .ascii-btn:active {
-    opacity: 1
+    opacity: 1;
 }
 
 .ascii-btn canvas {
-    display: block
+    display: block;
 }
