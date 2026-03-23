@@ -7,13 +7,11 @@ ctx.font = `${FONT_SIZE}px "Courier New", monospace`;
 const CW = Math.ceil(ctx.measureText('M').width);
 const CH = FONT_SIZE + 2;
 
-const OVERSHOOT = 150;
-
 let cols, rows, t = 0;
 
 function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight + OVERSHOOT * 2;
+    canvas.width = screen.width;
+    canvas.height = Math.max(screen.height, window.innerHeight + 200);
 
     cols = Math.ceil(canvas.width / CW) + 1;
     rows = Math.ceil(canvas.height / CH) + 1;
@@ -24,17 +22,6 @@ function resize() {
 
 window.addEventListener('resize', resize);
 resize();
-
-window.addEventListener('load', () => {
-    setTimeout(resize, 100);
-    setTimeout(resize, 400);
-});
-
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        setTimeout(resize, 100);
-    }
-});
 
 function plasma(cx, cy, t) {
     const x = cx + Math.sin(cy * 3 + t * 0.7) * 0.07;

@@ -75,22 +75,10 @@ body::after {
 
 #c {
     position: fixed;
-    top: -150px;
-    left: 0;
-    right: 0;
-    bottom: -150px;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1;
-    -webkit-mask-image: linear-gradient(to bottom,
-            transparent 0%,
-            black 12%,
-            black 88%,
-            transparent 100%);
-    mask-image: linear-gradient(to bottom,
-            transparent 0%,
-            black 12%,
-            black 88%,
-            transparent 100%);
 }
 
 .logo {
@@ -196,6 +184,7 @@ form {
     line-height: 1.25;
     display: flex;
     align-items: center;
+    outline: none;
 }
 
 #uv-address::placeholder {
@@ -249,23 +238,14 @@ form {
 }
 
 #uv-error {
-    position: fixed;
-    bottom: 5rem;
-    left: 2.5rem;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.1em;
-    color: var(--fg);
-    opacity: 0.5;
-    font-family: 'Courier New', monospace;
+    color: rgba(232, 232, 232, 0.35);
 }
 
 #uv-error-code {
-    position: fixed;
-    bottom: 4.2rem;
-    left: 2.5rem;
-    font-size: 0.55rem;
+    font-size: 0.52rem;
     color: var(--dim);
-    font-family: 'Courier New', monospace;
 }
 
 .site-label {
@@ -342,17 +322,6 @@ form {
     letter-spacing: 0.22em;
     color: var(--dim);
     text-transform: uppercase;
-}
-
-#uv-error {
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    color: rgba(232, 232, 232, 0.35);
-}
-
-#uv-error-code {
-    font-size: 0.52rem;
-    color: var(--dim);
 }
 
 .ascii-btn {
