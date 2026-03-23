@@ -6,6 +6,20 @@
     padding: 0;
 }
 
+@font-face {
+    font-family: 'Pixeloid Sans';
+    src: url('../../pixeloid_sans/PixeloidSans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pixeloid Sans';
+    src: url('../../pixeloid_sans/PixeloidSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 :root {
     --bg: #050505;
     --fg: #bbbbbb;
@@ -104,6 +118,34 @@ body::after {
     -webkit-mask-image: radial-gradient(ellipse 60% 60% at center, transparent 25%, black 75%);
     mask-image: radial-gradient(ellipse 60% 60% at center, transparent 25%, black 75%);
     pointer-events: none;
+}
+
+.logo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    pointer-events: none;
+    font-size: 500px;
+    letter-spacing: 10px;
+    font-family: 'Pixeloid Sans', monospace;
+}
+
+.logo span {
+    opacity: 0;
+    filter: blur(15px);
+    display: inline-block;
+    transition: opacity 1s ease, filter 1s ease;
+}
+
+@media (max-width: 909px) {
+    .logo {
+        font-size: 190px;
+    }
 }
 
 #ascii-canvas {
