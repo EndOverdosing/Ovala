@@ -11,17 +11,6 @@
 * **Privacy-Focused:** No logging of your browsing history on the server-side.
 * **Local History:** Quick access to your last four visited sites, stored securely in your browser's local storage.
 * **Search Functionality:** Enter a search term or URL to be automatically redirected through the proxy.
-* **Easy Deployment:** Deploy your own instance with a single click.
-
-**Getting Started**
-
-You can easily deploy your own instance of **Ovala** or run it locally.
-
-**Deploy to Vercel**
-
-Click the button below to deploy your own instance of **Ovala** to Vercel in minutes.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/endoverdosing/Ovala)
 
 **Running Locally**
 
