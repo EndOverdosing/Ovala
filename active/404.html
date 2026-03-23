@@ -236,7 +236,35 @@
 
     drawAsciiBtn(document.getElementById('btn-back-canvas'), '[← go back]');
 
-    window.addEventListener('load', () => { registerSW().catch(() => { }) });
+    async function recheck404() {
+      try {
+        const originalUrl = new URL(window.location.href);
+        const pathParts = originalUrl.pathname.split('/');
+        const encodedUrl = pathParts[pathParts.length - 1];
+
+        if (!encodedUrl) return;
+
+        const targetUrl = __uv$config.decodeUrl(encodedUrl);
+
+        const response = await fetch(targetUrl, {
+          method: 'HEAD',
+          mode: 'no-cors'
+        });
+
+        if (response && window.__uv && window.__uv.meta) {
+          console.log('Site is accessible, refreshing...');
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log('Still a 404 or site not registered:', error.message);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      registerSW().catch(() => { })
+
+      setTimeout(recheck404, 1000);
+    });
   </script>
 
   <script src="/active/uv/uv.bundle.js" charset="UTF-8"></script>
