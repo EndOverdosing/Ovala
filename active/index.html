@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   <meta name="description" content="Ovala - A fast and modern web proxy.">
+   <meta property="og:image" content="/images/banner.png" />
+   <meta property="og:title" content="Ovala - Proxy" />
+   <meta property="og:description" content="Ovala - A fast and modern web proxy.">
+   <meta property="og:url" content="https://ovala.vercel.app/">
+   <meta name="twitter:card" content="summary_large_image">
+   <meta name="twitter:title" content="Ovala - Proxy">
+   <meta name="twitter:description" content="Ovala - A fast and modern web proxy.">
+   <meta name="twitter:image" content="/images/banner.png">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+   <title>Ovala</title>
+   <link rel="icon" href="/images/favicon.png">
+   <link rel="manifest" href="/manifest.json">
+   <link rel="stylesheet" href="styling/index.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+   <span class="site-label">OVALA — PROXY</span>
+
+   <div id="ascii-canvas">
+      <canvas id="ascii-canvas-el"></canvas>
+   </div>
+
+   <div id="ui">
+      <p id="uv-error"></p>
+      <pre id="uv-error-code"></pre>
+      <div class="bottom-row">
+         <form id="uv-form">
+            <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
+            <input id="uv-address" name="text" type="text" placeholder="search or enter url..." autocomplete="off"
+               spellcheck="false" autocorrect="off" autocapitalize="off" enterkeyhint="go" inputmode="url" />
+         </form>
+         <div class="meta">
+            <div id="clock">--:--:--</div>
+            <div>UV/3.0</div>
+         </div>
+      </div>
+   </div>
+
+   <script src="uv/uv.bundle.js" charset="UTF-8" defer></script>
+   <script src="uv/uv.config.js" charset="UTF-8" defer></script>
+   <script src="js/register-sw.js" charset="UTF-8" defer></script>
+   <script src="js/search.js" charset="UTF-8" defer></script>
+   <script src="js/index.js" charset="UTF-8" defer></script>
+</body>
+
+</html>
