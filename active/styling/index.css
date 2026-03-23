@@ -11,7 +11,7 @@
     --fg: #bbbbbb;
     --dim: rgba(255, 255, 255, 0.2);
     --accent: #bfa77f;
-    --dot-color: #111111;
+    --dot-color: #292929;
 }
 
 html,
@@ -31,12 +31,15 @@ body::before {
     content: '';
     position: fixed;
     inset: 0;
-    z-index: 0;
+    z-index: 2;
     background-image: radial-gradient(circle, var(--dot-color, #111) 0.5px, transparent 1px);
     background-size: 30px 30px;
-    -webkit-mask-image: radial-gradient(ellipse 60% 60% at center, black 30%, transparent 80%);
-    mask-image: radial-gradient(ellipse 60% 60% at center, black 30%, transparent 80%);
     pointer-events: none;
+}
+
+#c {
+    -webkit-mask-image: linear-gradient(to top, transparent, black 60%, black 90%, transparent);
+    mask-image: linear-gradient(to top, transparent, black 60%, black 90%, transparent);
 }
 
 body::after {

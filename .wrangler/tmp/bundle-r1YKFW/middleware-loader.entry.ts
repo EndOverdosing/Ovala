@@ -1,13 +1,7 @@
-// This loads all middlewares exposed on the middleware object and then starts
-// the invocation chain. The big idea is that we can add these to the middleware
-// export dynamically through wrangler, or we can potentially let users directly
-// add them as a sort of "plugin" system.
-
 import ENTRY, { __INTERNAL_WRANGLER_MIDDLEWARE__ } from "C:\\Users\\Derek\\Downloads\\Ovala\\.wrangler\\tmp\\bundle-r1YKFW\\middleware-insertion-facade.js";
 import { __facade_invoke__, __facade_register__, Dispatcher } from "C:\\Users\\Derek\\AppData\\Local\\nvm\\v20.19.4\\node_modules\\wrangler\\templates\\middleware\\common.ts";
 import type { WorkerEntrypointConstructor } from "C:\\Users\\Derek\\Downloads\\Ovala\\.wrangler\\tmp\\bundle-r1YKFW\\middleware-insertion-facade.js";
 
-// Preserve all the exports from the worker
 export * from "C:\\Users\\Derek\\Downloads\\Ovala\\.wrangler\\tmp\\bundle-r1YKFW\\middleware-insertion-facade.js";
 
 class __Facade_ScheduledController__ implements ScheduledController {
@@ -25,20 +19,17 @@ class __Facade_ScheduledController__ implements ScheduledController {
 		if (!(this instanceof __Facade_ScheduledController__)) {
 			throw new TypeError("Illegal invocation");
 		}
-		// Need to call native method immediately in case uncaught error thrown
 		this.#noRetry();
 	}
 }
 
 function wrapExportedHandler(worker: ExportedHandler): ExportedHandler {
-	// If we don't have any middleware defined, just return the handler as is
 	if (
 		__INTERNAL_WRANGLER_MIDDLEWARE__ === undefined ||
 		__INTERNAL_WRANGLER_MIDDLEWARE__.length === 0
 	) {
 		return worker;
 	}
-	// Otherwise, register all middleware once
 	for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__) {
 		__facade_register__(middleware);
 	}
@@ -75,19 +66,17 @@ function wrapExportedHandler(worker: ExportedHandler): ExportedHandler {
 function wrapWorkerEntrypoint(
 	klass: WorkerEntrypointConstructor
 ): WorkerEntrypointConstructor {
-	// If we don't have any middleware defined, just return the handler as is
 	if (
 		__INTERNAL_WRANGLER_MIDDLEWARE__ === undefined ||
 		__INTERNAL_WRANGLER_MIDDLEWARE__.length === 0
 	) {
 		return klass;
 	}
-	// Otherwise, register all middleware once
+
 	for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__) {
 		__facade_register__(middleware);
 	}
 
-	// `extend`ing `klass` here so other RPC methods remain callable
 	return class extends klass {
 		#fetchDispatcher: ExportedHandlerFetchHandler<Record<string, unknown>> = (
 			request,

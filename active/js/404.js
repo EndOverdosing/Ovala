@@ -1,29 +1,6 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById("uv-form");
-  const address = document.getElementById("uv-address");
-  const searchEngine = document.getElementById("uv-search-engine");
-  const error = document.getElementById("uv-error");
-  const errorCode = document.getElementById("uv-error-code");
-
-  if (form) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      try {
-        await registerSW();
-      } catch (err) {
-        error.textContent = "Failed to register service worker.";
-        errorCode.textContent = err.toString();
-        throw err;
-      }
-
-      const url = search(address.value, searchEngine.value);
-      location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
-    });
-  }
-
   const clockEl = document.getElementById('clock');
   if (clockEl) {
     function tick() {
@@ -33,42 +10,24 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(tick, 1000);
   }
 
-  const GLYPHS = {
-    'O': [
-      [0, 1, 1, 1, 0],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [0, 1, 1, 1, 0],
-    ],
-    'V': [
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [0, 1, 0, 1, 0],
-      [0, 1, 0, 1, 0],
-      [0, 0, 1, 0, 0],
-    ],
-    'A': [
-      [0, 0, 1, 0, 0],
-      [0, 1, 0, 1, 0],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
+  const GLYPHS_404 = {
+    '4': [
+      [1, 0, 0, 1, 0],
+      [1, 0, 0, 1, 0],
+      [1, 0, 0, 1, 0],
       [1, 1, 1, 1, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
+      [0, 0, 0, 1, 0],
+      [0, 0, 0, 1, 0],
+      [0, 0, 0, 1, 0],
     ],
-    'L': [
-      [1, 0, 0, 0],
-      [1, 0, 0, 0],
-      [1, 0, 0, 0],
-      [1, 0, 0, 0],
-      [1, 0, 0, 0],
-      [1, 0, 0, 0],
-      [1, 1, 1, 1],
+    '0': [
+      [0, 1, 1, 1, 0],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [0, 1, 1, 1, 0],
     ],
   };
 
@@ -84,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const ROWS = 7;
-  const GLYPH_COLS = { 'O': 5, 'V': 5, 'A': 5, 'L': 4 };
-  const WORD = 'OVALA';
+  const GLYPH_COLS = { '4': 5, '0': 5 };
+  const WORD = '404';
 
   let particles = [];
   let mouseX = -9999;
@@ -126,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (let li = 0; li < WORD.length; li++) {
       const ch = WORD[li];
-      const glyph = GLYPHS[ch];
+      const glyph = GLYPHS_404[ch];
       const cols = GLYPH_COLS[ch] || 5;
 
       for (let r = 0; r < ROWS; r++) {
