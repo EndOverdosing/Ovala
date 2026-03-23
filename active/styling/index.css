@@ -101,11 +101,13 @@ body::before {
     background-image: radial-gradient(circle, var(--dot-color, #111) 0.5px, transparent 1px);
     background-size: 30px 30px;
     pointer-events: none;
+    overflow: hidden;
 }
 
 #c {
     -webkit-mask-image: linear-gradient(to top, transparent, black 60%, black 90%, transparent);
     mask-image: linear-gradient(to top, transparent, black 60%, black 90%, transparent);
+    overflow: hidden;
 }
 
 body::after {
@@ -118,6 +120,7 @@ body::after {
     -webkit-mask-image: radial-gradient(ellipse 60% 60% at center, transparent 25%, black 75%);
     mask-image: radial-gradient(ellipse 60% 60% at center, transparent 25%, black 75%);
     pointer-events: none;
+    overflow: hidden;
 }
 
 .logo {
