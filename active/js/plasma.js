@@ -25,6 +25,17 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
+window.addEventListener('load', () => {
+    setTimeout(resize, 100);
+    setTimeout(resize, 400);
+});
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        setTimeout(resize, 100);
+    }
+});
+
 function plasma(cx, cy, t) {
     const x = cx + Math.sin(cy * 3 + t * 0.7) * 0.07;
     const y = cy + Math.cos(cx * 3 + t * 0.5) * 0.07;
