@@ -66,7 +66,21 @@ body::after {
     transition: opacity 1s ease;
     display: block;
     user-select: none;
-    max-width: 90vw;
+    max-width: 95vw;
+    transform-origin: center center;
+}
+
+@media (max-width: 600px) {
+    #ascii-canvas canvas {
+        max-width: 92vw;
+        transform: scale(1);
+    }
+
+    #ascii-canvas {
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.5rem;
+    }
 }
 
 #ui {

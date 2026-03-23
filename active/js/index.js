@@ -96,14 +96,14 @@ const DAMPING = 0.88;
 
 function getFontSize() {
   const vw = window.innerWidth;
-  if (vw <= 480) return Math.max(4, vw * 0.018);
+  if (vw <= 480) return Math.max(8, vw * 0.028);
   return Math.max(5, Math.min(11, vw * 0.011));
 }
 
 function buildParticles() {
-  const w = 4;
-  const h = 2;
-  const gap = 4;
+  const w = window.innerWidth <= 480 ? 3 : 4;
+  const h = window.innerWidth <= 480 ? 2 : 2;
+  const gap = window.innerWidth <= 480 ? 3 : 4;
   cellW = w;
   cellH = h;
 
